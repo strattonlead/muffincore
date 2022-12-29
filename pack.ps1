@@ -27,14 +27,26 @@ $array.Add("Muffin.EntityFrameworkCore.Mail.Services")
 $array.Add("Muffin.EntityFrameworkCore.Tenancy")
 $array.Add("Muffin.EntityFrameworkCore.Tenancy.Abstraction")
 
+$array.Add("Muffin.Globalization.Services")
+$array.Add("Muffin.Globalization.Services.Abstraction")
+$array.Add("Muffin.Globalization.Static")
 $array.Add("Muffin.Mail.Abstraction")
 $array.Add("Muffin.Services")
 $array.Add("Muffin.Services.Abstraction")
+$array.Add("Muffin.Services.ClearScript")
+$array.Add("Muffin.Services.Razor")
+$array.Add("Muffin.Services.Razor.Abstraction")
+$array.Add("Muffin.Services.V8")
+$array.Add("Muffin.Services.V8.Abstraction")
+$array.Add("Muffin.SSH")
 
 $array.Add("Muffin.StateManagement")
 $array.Add("Muffin.StateManagement.Models")
 $array.Add("Muffin.Tenancy.Abstraction")
 $array.Add("Muffin.Hetzner.Robot.Api")
+$array.Add("Muffin.WebSockets")
+$array.Add("Muffin.WebSockets.Server")
+$array.Add("Muffin.WebSockets.Server.Queue")
 
 $array | ForEach-Object {
 Write-Output "Clear $_ ..."
@@ -47,22 +59,15 @@ Write-Output "Cleared $_ ..."
 
 $array | ForEach-Object {
 Write-Output "Compile $_ ..."
-$project = $_
-$namespace = "CreateIf." + $project
-$currentDirectoryPath = pwd
-$file = Get-ChildItem -Path $currentDirectoryPath/$project/bin/Release -File
-$filename = $file.Name
 
-$version = $file.Name -replace "\.(\d+\.\d+\.\d+)\.nupkg", '$1'
-$version = $version -replace $namespace
-
-dotnet pack $project --configuration Release
+dotnet pack $_ --configuration Release
 
 Write-Output "Compiled $_ ..."
 }
 
 $array | ForEach-Object {
 Write-Output "Pack $_ ..."
+
 $project = $_
 $namespace = "CreateIf." + $project
 $currentDirectoryPath = pwd

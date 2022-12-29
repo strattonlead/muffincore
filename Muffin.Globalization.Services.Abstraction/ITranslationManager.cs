@@ -1,4 +1,7 @@
-﻿namespace Muffin.Globalization.Services.Abstraction
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Muffin.Globalization.Services.Abstraction
 {
     public interface ITranslationManager
     {

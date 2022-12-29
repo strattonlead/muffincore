@@ -1,8 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<PackageId>CreateIf.Muffin.WebSockets.Server.Queue</PackageId>
+		<Version>6.0.0</Version>
+		<Authors>Arndt Bieberstein</Authors>
+		<Company>CreateIF Labs GmbH</Company>
+		<PackageDescription>CreateIf.Muffin.WebSockets.Server.Queue</PackageDescription>
+		<RepositoryUrl>https://github.com/strattonlead/muffincore</RepositoryUrl>
+	</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Muffin.WebSockets.Server\Muffin.WebSockets.Server.csproj" />
