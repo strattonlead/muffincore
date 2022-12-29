@@ -1,0 +1,4 @@
+{
+  "name": "Keydown event",
+  "jsScript": "function worker(node, inputs, outputs) { console.log('hi'); outputs['act'] = 5; outputs['key'] = 10; }"
+}

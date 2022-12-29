@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muffin.BackgroundServices\Muffin.BackgroundServices.csproj" />
+    <ProjectReference Include="..\Muffin.EntityFrameworkCore.Entity\Muffin.EntityFrameworkCore.Entity.csproj" />
+    <ProjectReference Include="..\Muffin.EntityFrameworkCore.Mail.Render\Muffin.EntityFrameworkCore.Mail.Render.csproj" />
+    <ProjectReference Include="..\Muffin.EntityFrameworkCore.Mail\Muffin.EntityFrameworkCore.Mail.csproj" />
+  </ItemGroup>
+</Project>

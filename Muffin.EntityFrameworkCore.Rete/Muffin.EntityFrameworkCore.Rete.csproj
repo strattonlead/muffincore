@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muffin.EntityFrameworkCore.Entity\Muffin.EntityFrameworkCore.Entity.csproj" />
+    <ProjectReference Include="..\Muffin.Rete\Muffin.Rete.csproj" />
+  </ItemGroup>
+
+</Project>

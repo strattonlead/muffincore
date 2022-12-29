@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <Configurations>Debug;Release;EF</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Rete\component1.json" />
+    <None Remove="Rete\model1.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Rete\component1.json" />
+    <EmbeddedResource Include="Rete\model1.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ClearScript.V8" Version="7.3.1" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="PuppeteerSharp" Version="7.1.0" />
+    <PackageReference Include="SshKeyGenerator" Version="1.1.50" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muffin.Common\Muffin.Common.csproj" />
+    <ProjectReference Include="..\Muffin.Primes\Muffin.Primes.csproj" />
+    <ProjectReference Include="..\Muffin.Rete\Muffin.Rete.csproj" />
+    <ProjectReference Include="..\Muffin.RsaLicense\Muffin.RsaLicense.csproj" />
+  </ItemGroup>
+
+</Project>

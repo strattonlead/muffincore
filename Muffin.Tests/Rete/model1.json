@@ -1,0 +1,105 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "num": 2
+      },
+      "inputs": {},
+      "outputs": {
+        "num": {
+          "connections": [
+            {
+              "node": 3,
+              "input": "left",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "position": [ 80, 200 ],
+      "name": "Number"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "num": 3
+      },
+      "inputs": {},
+      "outputs": {
+        "num": {
+          "connections": [
+            {
+              "node": 3,
+              "input": "right",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "position": [ 80, 400 ],
+      "name": "Number"
+    },
+    "3": {
+      "id": 3,
+      "data": {},
+      "inputs": {
+        "left": {
+          "connections": [
+            {
+              "node": 1,
+              "output": "num",
+              "data": {}
+            }
+          ]
+        },
+        "right": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "num",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "result": {
+          "connections": []
+        }
+      },
+      "position": [ 500, 240 ],
+      "name": "Add"
+    },
+    "4": {
+      "id": 4,
+      "data": {
+        "event": 1
+      },
+      "inputs": {},
+      "outputs": {
+        "event": {
+          "connections": []
+        }
+      },
+      "position": [ -201.57916094384424, -25.43413986340596 ],
+      "name": "Event"
+    },
+    "5": {
+      "id": 5,
+      "data": {
+        "event": 2
+      },
+      "inputs": {},
+      "outputs": {
+        "event": {
+          "connections": []
+        }
+      },
+      "position": [ -207.00480750879245, 166.43746835115235 ],
+      "name": "Event"
+    }
+  },
+  "comments": []
+}

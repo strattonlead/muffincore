@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>net6.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Components\AddComponent.js" />
+    <None Remove="Components\BoolComponent.js" />
+    <None Remove="Components\ConcatComponent.js" />
+    <None Remove="Components\DivideComponent.js" />
+    <None Remove="Components\EventComponent.js" />
+    <None Remove="Components\HttpGetComponent.js" />
+    <None Remove="Components\JsonGetComponent.js" />
+    <None Remove="Components\JsonParseComponent.js" />
+    <None Remove="Components\JsonPostComponent.js" />
+    <None Remove="Components\JsonStringifyComponent.js" />
+    <None Remove="Components\LoggerComponent.js" />
+    <None Remove="Components\MultiplyComponent.js" />
+    <None Remove="Components\NotComponent.js" />
+    <None Remove="Components\NumberComponent.js" />
+    <None Remove="Components\ReplaceComponent.js" />
+    <None Remove="Components\ScriptComponent.js" />
+    <None Remove="Components\SubComponent.js" />
+    <None Remove="Components\TextAreaComponent.js" />
+    <None Remove="Components\TextComponent.js" />
+    <None Remove="Controls\BoolControl.js" />
+    <None Remove="Controls\NumberControl.js" />
+    <None Remove="Controls\TextAreaControl.js" />
+    <None Remove="Controls\TextControl.js" />
+    <None Remove="Sockets\Header.js" />
+    <None Remove="Sockets\Sockets.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Components\BoolComponent.js" />
+    <EmbeddedResource Include="Components\HttpGetComponent.js" />
+    <EmbeddedResource Include="Components\JsonStringifyComponent.js" />
+    <EmbeddedResource Include="Components\JsonParseComponent.js" />
+    <EmbeddedResource Include="Components\JsonGetComponent.js" />
+    <EmbeddedResource Include="Components\ReplaceComponent.js" />
+    <EmbeddedResource Include="Components\ConcatComponent.js" />
+    <EmbeddedResource Include="Components\DivideComponent.js" />
+    <EmbeddedResource Include="Components\MultiplyComponent.js" />
+    <EmbeddedResource Include="Components\NotComponent.js" />
+    <EmbeddedResource Include="Components\JsonPostComponent.js" />
+    <EmbeddedResource Include="Components\ScriptComponent.js" />
+    <EmbeddedResource Include="Components\LoggerComponent.js" />
+    <EmbeddedResource Include="Components\EventComponent.js" />
+    <EmbeddedResource Include="Components\TextAreaComponent.js" />
+    <EmbeddedResource Include="Components\TextComponent.js" />
+    <EmbeddedResource Include="Components\SubComponent.js" />
+    <EmbeddedResource Include="Components\NumberComponent.js" />
+    <EmbeddedResource Include="Components\AddComponent.js" />
+    <EmbeddedResource Include="Controls\BoolControl.js" />
+    <EmbeddedResource Include="Controls\TextAreaControl.js" />
+    <EmbeddedResource Include="Controls\TextControl.js" />
+    <EmbeddedResource Include="Controls\NumberControl.js" />
+    <EmbeddedResource Include="Sockets\Header.js" />
+    <EmbeddedResource Include="Sockets\Sockets.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.ClearScript.V8" Version="7.3.1" />
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\Muffin.Services.V8.Abstraction\Muffin.Services.V8.Abstraction.csproj" />
+  </ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
+	</Target>
+</Project>

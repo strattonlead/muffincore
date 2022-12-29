@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='EF|netstandard2.1|AnyCPU'">
+    <DefineConstants>TRACE;EFADDMIGRATION</DefineConstants>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muffin.EntityFrameworkCore.Entity\Muffin.EntityFrameworkCore.Entity.csproj" />
+    <ProjectReference Include="..\Muffin.Vimeo.Abstraction\Muffin.Vimeo.Abstraction.csproj" />
+  </ItemGroup>
+  
+</Project>
