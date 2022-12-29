@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
-  </Target>
+  </Target>-->
 </Project>

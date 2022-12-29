@@ -1,17 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<TargetFramework>net6.0</TargetFramework>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<PackageId>CreateIf.Muffin.EntityFrameworkCore.Tenancy.Abstraction</PackageId>
+		<Version>6.0.0</Version>
+		<Authors>Arndt Bieberstein</Authors>
+		<Company>CreateIF Labs GmbH</Company>
+		<PackageDescription>CreateIf.Muffin.EntityFrameworkCore.Tenancy.Abstraction</PackageDescription>
+		<RepositoryUrl>https://github.com/strattonlead/muffincore</RepositoryUrl>
+	</PropertyGroup>
 
   <ItemGroup>
 	<ProjectReference Include="..\Muffin.Tenancy.Abstraction\Muffin.Tenancy.Abstraction.csproj" />
   </ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
-	</Target>
+	</Target>-->
 
 </Project>

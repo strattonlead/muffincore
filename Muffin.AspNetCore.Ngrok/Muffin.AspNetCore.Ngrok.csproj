@@ -1,10 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<PackageId>CreateIf.Muffin.AspNetCore.Ngrok</PackageId>
+		<Version>6.0.0</Version>
+		<Authors>Arndt Bieberstein</Authors>
+		<Company>CreateIF Labs GmbH</Company>
+		<PackageDescription>This package adds CreateIf.Muffin.AspNetCore.Ngrok</PackageDescription>
+		<RepositoryUrl>https://github.com/strattonlead/muffincore</RepositoryUrl>
+	</PropertyGroup>
 
   <ItemGroup>
     <None Remove="ngrok.exe" />

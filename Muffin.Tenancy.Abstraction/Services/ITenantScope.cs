@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Muffin.Tenancy.Abstraction;
+using System;
+using System.Threading.Tasks;
 
 namespace Muffin.Tenancy.Services.Abstraction
 {

@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
-    </Target>
+    </Target>-->
 </Project>

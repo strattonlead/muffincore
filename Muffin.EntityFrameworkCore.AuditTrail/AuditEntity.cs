@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Muffin.EntityFrameworkCore.Entity;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace Muffin.EntityFrameworkCore.AuditTrail
 {

@@ -8,9 +8,9 @@
     <DefineConstants>TRACE;EFADDMIGRATION</DefineConstants>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
-  </Target>
+  </Target>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

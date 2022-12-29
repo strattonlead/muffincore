@@ -1,13 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<PackageId>CreateIf.Muffin.BackgroundServices</PackageId>
+		<Version>6.0.0</Version>
+		<Authors>Arndt Bieberstein</Authors>
+		<Company>CreateIF Labs GmbH</Company>
+		<PackageDescription>This package adds CreateIf.Muffin.BackgroundServices</PackageDescription>
+		<RepositoryUrl>https://github.com/strattonlead/muffincore</RepositoryUrl>
+	</PropertyGroup>
+	
+	<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
-	</Target>
+	</Target>-->
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />

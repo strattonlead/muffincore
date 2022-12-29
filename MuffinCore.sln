@@ -139,7 +139,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.AspNetCore.Ngrok", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.Services.Tunnel", "Muffin.Services.Tunnel\Muffin.Services.Tunnel.csproj", "{B627EE3B-B16E-4F66-8457-6E7E1A617D8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Muffin.TestData", "Muffin.TestData\Muffin.TestData.csproj", "{B75B8765-0A57-404F-A54F-B3EAA4032147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.TestData", "Muffin.TestData\Muffin.TestData.csproj", "{B75B8765-0A57-404F-A54F-B3EAA4032147}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{21E890D4-3809-4557-9180-5656CC05CB04}"
+	ProjectSection(SolutionItems) = preProject
+		pack.ps1 = pack.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

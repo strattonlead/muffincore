@@ -1,4 +1,6 @@
-﻿namespace Muffin.EntityFrameworkCore.AuditTrail
+﻿using System.Collections.Generic;
+
+namespace Muffin.EntityFrameworkCore.AuditTrail
 {
     public class AuditTrailCache
     {

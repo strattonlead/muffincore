@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace Muffin.Tenancy.Abstraction.Services
 {

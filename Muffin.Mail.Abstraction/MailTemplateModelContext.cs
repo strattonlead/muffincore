@@ -1,4 +1,7 @@
-﻿namespace Muffin.Mail.Abstraction
+﻿using System;
+using System.Collections.Generic;
+
+namespace Muffin.Mail.Abstraction
 {
     public abstract class MailTemplateModelContext
     {
