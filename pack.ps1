@@ -55,9 +55,12 @@ $array | ForEach-Object {
     Write-Output "Clear $_ ..."
     $project = $_
 
-    Remove-Item -Force -Recurse -Path "$currentDirectoryPath/$project/bin"
-    Remove-Item -Force -Recurse -Path "$currentDirectoryPath/$project/obj"
     dotnet clean $project 
+	
+    $currentDirectoryPath = pwd
+
+    Remove-Item $currentDirectoryPath/$project/bin -Recurse -Force -confirm:$false
+    Remove-Item $currentDirectoryPath/$project/obj -Recurse -Force -confirm:$false
 
     Write-Output "Cleared $_ ..."
 }
