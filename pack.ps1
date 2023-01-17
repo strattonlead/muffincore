@@ -49,12 +49,17 @@ $array.Add("Muffin.WebSockets.Server")
 $array.Add("Muffin.WebSockets.Server.Queue")
 
 $array | ForEach-Object {
-Write-Output "Clear $_ ..."
-$project = $_
+	Write-Output "Clear $_ ..."
+	$project = $_
 
-dotnet clean $project 
+	dotnet clean $project 
+	
+	$currentDirectoryPath = pwd
 
-Write-Output "Cleared $_ ..."
+	rm $currentDirectoryPath/$project/bin -Recurse -Force -confirm:$false
+	rm $currentDirectoryPath/$project/obj -Recurse -Force -confirm:$false
+
+	Write-Output "Cleared $_ ..."
 }
 
 $array | ForEach-Object {

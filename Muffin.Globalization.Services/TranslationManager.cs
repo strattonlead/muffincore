@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Muffin.Common.Util;
 using Muffin.EntityFrameworkCore.Globalization;
 using Muffin.Globalization.Services.Abstraction;
 using System;
@@ -9,12 +10,14 @@ using System.Threading.Tasks;
 
 namespace Muffin.Globalization.Services
 {
-    public class TranslationManager<TContext> : ITranslationManager
-        where TContext : DbContext, IGlobalizationDbContext
+    public class TranslationManager : ITranslationManager
+    //where TContext : DbContext, IGlobalizationDbContext
     {
         #region Properties
 
-        private readonly TContext DbContext;
+        //private readonly TContext DbContext;
+        private readonly TranslationManagerOptions _options;
+        private readonly IGlobalizationDbContext[] DbContexts;
 
         #endregion
 
@@ -22,7 +25,12 @@ namespace Muffin.Globalization.Services
 
         public TranslationManager(IServiceProvider serviceProvider)
         {
-            DbContext = serviceProvider.GetRequiredService<TContext>();
+            //DbContext = serviceProvider.GetRequiredService<TContext>();
+            _options = serviceProvider.GetRequiredService<TranslationManagerOptions>();
+            DbContexts = _options.ContextTypes
+                .Select(x => serviceProvider.GetRequiredService(x))
+                .Cast<IGlobalizationDbContext>()
+                .ToArray();
         }
 
         #endregion
@@ -39,18 +47,30 @@ namespace Muffin.Globalization.Services
 
         public Dictionary<string, object> GetTranslations()
         {
-            var localizedStrings = DbContext.LocalizedStrings.AsSplitQuery().AsNoTracking().ToArray();
-            var languageCodes = localizedStrings.SelectMany(x => x.LocalizedStringValues).Select(x => x.LanguageId).Distinct().ToArray();
+            return DbContexts.Select(x => _getTranslations(x)).Merge();
+        }
 
-            var resultModel = new Dictionary<string, object>();
-            foreach (var languageCode in languageCodes)
+        public Dictionary<string, object> _getTranslations(IGlobalizationDbContext dbContext)
+        {
+            try
             {
-                var flatDict = localizedStrings.SelectMany(x => x.LocalizedStringValues.Where(y => y.LanguageId == languageCode).Select(y => new { y, x })).ToDictionary(x => x.x.ToString(), x => x.y.Value);
-                var nestedDict = TransformKeyPath(flatDict);
-                resultModel[languageCode] = nestedDict;
-            }
+                var localizedStrings = dbContext.LocalizedStrings.AsSplitQuery().AsNoTracking().ToArray();
+                var languageCodes = localizedStrings.SelectMany(x => x.LocalizedStringValues).Select(x => x.LanguageId).Distinct().ToArray();
 
-            return resultModel;
+                var resultModel = new Dictionary<string, object>();
+                foreach (var languageCode in languageCodes)
+                {
+                    var flatDict = localizedStrings.SelectMany(x => x.LocalizedStringValues.Where(y => y.LanguageId == languageCode).Select(y => new { y, x })).ToDictionary(x => x.x.ToString(), x => x.y.Value);
+                    var nestedDict = TransformKeyPath(flatDict);
+                    resultModel[languageCode] = nestedDict;
+                }
+
+                return resultModel;
+            }
+            catch(Exception ex)
+            {
+                return new Dictionary<string, object>();
+            }
         }
 
         private Dictionary<string, object> TransformKeyPath(Dictionary<string, string> dict)
@@ -95,12 +115,41 @@ namespace Muffin.Globalization.Services
         #endregion
     }
 
+    public class TranslationManagerOptions
+    {
+        public List<Type> ContextTypes { get; set; } = new List<Type>();
+    }
+
+    public class TranslationManagerOptionsBuilder
+    {
+        private TranslationManagerOptions _options = new TranslationManagerOptions();
+        public TranslationManagerOptionsBuilder AddContext<TContext>()
+        {
+            _options.ContextTypes.Add(typeof(TContext));
+            return this;
+        }
+
+        public TranslationManagerOptions Build()
+        {
+            return _options;
+        }
+    }
+
     public static class TranslationManagerExtensions
     {
-        public static void AddTranslationManager<TContext>(this IServiceCollection services)
-            where TContext : DbContext, IGlobalizationDbContext
+        //public static void AddTranslationManager<TContext>(this IServiceCollection services)
+        //    where TContext : DbContext, IGlobalizationDbContext
+        //{
+        //    services.AddScoped<ITranslationManager, TranslationManager<TContext>>();
+        //}
+
+        public static void AddTranslationManager(this IServiceCollection services, Action<TranslationManagerOptionsBuilder> builder)
         {
-            services.AddScoped<ITranslationManager, TranslationManager<TContext>>();
+            var optionsBuilder = new TranslationManagerOptionsBuilder();
+            builder?.Invoke(optionsBuilder);
+            var options = optionsBuilder.Build();
+            services.AddSingleton(options);
+            services.AddScoped<ITranslationManager, TranslationManager>();
         }
     }
 }
