@@ -176,12 +176,17 @@ namespace Muffin.BackgroundServices
 
         public virtual void ForceRun(ITenant tenant)
         {
-            if (tenant == null)
+            ForceRun(tenant?.Id);
+        }
+
+        public virtual void ForceRun(long? tenantId)
+        {
+            if (!tenantId.HasValue)
             {
                 return;
             }
 
-            TenantIds.Add(tenant.Id);
+            TenantIds.Add(tenantId.Value);
             ResetEvent.Set();
             OnForceRun();
         }

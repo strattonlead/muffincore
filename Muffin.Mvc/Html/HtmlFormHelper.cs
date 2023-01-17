@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System;
 using System.Linq.Expressions;
 
-namespace MuffinMvc.Html
+namespace Muffin.Mvc.Html
 {
     public static class HtmlFormHelper
     {

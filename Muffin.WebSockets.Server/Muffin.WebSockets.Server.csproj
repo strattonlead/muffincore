@@ -25,7 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Muffin.Common\Muffin.Common.csproj" />
     <ProjectReference Include="..\Muffin.Tenancy.Abstraction\Muffin.Tenancy.Abstraction.csproj" />
-    <ProjectReference Include="..\MuffinMvc\MuffinMvc.csproj" />
+    <ProjectReference Include="..\Muffin.Mvc\Muffin.Mvc.csproj" />
   </ItemGroup>
 
   <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">

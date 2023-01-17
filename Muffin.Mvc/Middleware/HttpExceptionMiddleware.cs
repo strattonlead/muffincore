@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace MuffinMvcCore.Middleware
+namespace Muffin.MvcCore.Middleware
 {
     public static class ApplicationBuilderExtensions
     {

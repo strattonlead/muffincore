@@ -14,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MuffinMvc.Helpers
+namespace Muffin.Mvc.Helpers
 {
     public static class ControllerHelper
     {

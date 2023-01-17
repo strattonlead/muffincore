@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.Common", "Muffin.Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.WebSockets", "Muffin.WebSockets\Muffin.WebSockets.csproj", "{9214AC10-857A-4CAB-A3B5-F1297512D07A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuffinMvc", "MuffinMvc\MuffinMvc.csproj", "{940FA79D-02AC-429E-AF2F-554916E75F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.Mvc", "Muffin.Mvc\Muffin.Mvc.csproj", "{940FA79D-02AC-429E-AF2F-554916E75F42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuffinEntityFrameworkServiceBrokerListener", "MuffinEntityFrameworkServiceBrokerListener\MuffinEntityFrameworkServiceBrokerListener.csproj", "{91007935-AD35-41B9-966F-AC885F529ED5}"
 EndProject

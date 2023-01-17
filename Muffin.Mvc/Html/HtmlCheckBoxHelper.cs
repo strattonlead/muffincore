@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace MuffinMvc.Html
+namespace Muffin.Mvc.Html
 {
     public static class HtmlCheckBoxHelper
     {

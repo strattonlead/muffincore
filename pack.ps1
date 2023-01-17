@@ -31,6 +31,7 @@ $array.Add("Muffin.Globalization.Services")
 $array.Add("Muffin.Globalization.Services.Abstraction")
 $array.Add("Muffin.Globalization.Static")
 $array.Add("Muffin.Mail.Abstraction")
+$array.Add("Muffin.Mvc")
 $array.Add("Muffin.Services")
 $array.Add("Muffin.Services.Abstraction")
 $array.Add("Muffin.Services.ClearScript")
@@ -48,38 +49,42 @@ $array.Add("Muffin.WebSockets")
 $array.Add("Muffin.WebSockets.Server")
 $array.Add("Muffin.WebSockets.Server.Queue")
 
-$array | ForEach-Object {
-Write-Output "Clear $_ ..."
-$project = $_
-
-dotnet clean $project 
-
-Write-Output "Cleared $_ ..."
-}
-
-$array | ForEach-Object {
-Write-Output "Compile $_ ..."
-
-dotnet pack $_ --configuration Release
-
-Write-Output "Compiled $_ ..."
-}
-
-$array | ForEach-Object {
-Write-Output "Pack $_ ..."
-
-$project = $_
-$namespace = "CreateIf." + $project
 $currentDirectoryPath = pwd
-$file = Get-ChildItem -Path $currentDirectoryPath/$project/bin/Release -File
-$filename = $file.Name
 
-$version = $file.Name -replace "\.(\d+\.\d+\.\d+)\.nupkg", '$1'
-$version = $version -replace $namespace
+$array | ForEach-Object {
+    Write-Output "Clear $_ ..."
+    $project = $_
 
-$nugetFilePath = Join-Path -Path $pwd -ChildPath "$project/bin/Release/$filename"
-Write-Output $nugetFilePath
+    Remove-Item -Force -Recurse -Path "$currentDirectoryPath/$project/bin"
+    Remove-Item -Force -Recurse -Path "$currentDirectoryPath/$project/obj"
+    dotnet clean $project 
 
-dotnet nuget push $nugetFilePath --api-key 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 --source "createif-labs" --skip-duplicate
-Write-Output "Packed $_ ..."
+    Write-Output "Cleared $_ ..."
+}
+
+$array | ForEach-Object {
+    Write-Output "Compile $_ ..."
+
+    dotnet pack $_ --configuration Release
+
+    Write-Output "Compiled $_ ..."
+}
+
+$array | ForEach-Object {
+    Write-Output "Pack $_ ..."
+
+    $project = $_
+    $namespace = "CreateIf." + $project
+
+    $file = Get-ChildItem -Path $currentDirectoryPath/$project/bin/Release -File
+    $filename = $file.Name
+
+    $version = $file.Name -replace "\.(\d+\.\d+\.\d+)\.nupkg", '$1'
+    $version = $version -replace $namespace
+
+    $nugetFilePath = Join-Path -Path $pwd -ChildPath "$project/bin/Release/$filename"
+    Write-Output $nugetFilePath
+
+    dotnet nuget push $nugetFilePath --api-key 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 --source "createif-labs" --skip-duplicate
+    Write-Output "Packed $_ ..."
 }
