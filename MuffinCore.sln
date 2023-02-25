@@ -146,6 +146,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 		pack.ps1 = pack.ps1
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.WebSockets.Server.V2", "Muffin.WebSockets.Server.V2\Muffin.WebSockets.Server.V2.csproj", "{D8EC8F69-1364-4B88-8BC1-FB78178FB335}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.WebSockets.Server.Queue.V2", "Muffin.WebSockets.Server.Queue.V2\Muffin.WebSockets.Server.Queue.V2.csproj", "{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -567,6 +571,18 @@ Global
 		{B75B8765-0A57-404F-A54F-B3EAA4032147}.EF|Any CPU.Build.0 = Debug|Any CPU
 		{B75B8765-0A57-404F-A54F-B3EAA4032147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B75B8765-0A57-404F-A54F-B3EAA4032147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8EC8F69-1364-4B88-8BC1-FB78178FB335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8EC8F69-1364-4B88-8BC1-FB78178FB335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8EC8F69-1364-4B88-8BC1-FB78178FB335}.EF|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8EC8F69-1364-4B88-8BC1-FB78178FB335}.EF|Any CPU.Build.0 = Debug|Any CPU
+		{D8EC8F69-1364-4B88-8BC1-FB78178FB335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8EC8F69-1364-4B88-8BC1-FB78178FB335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}.EF|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}.EF|Any CPU.Build.0 = Debug|Any CPU
+		{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF9BB9C-CB95-4314-9615-3E8DB37C7F6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

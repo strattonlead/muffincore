@@ -47,7 +47,9 @@ $array.Add("Muffin.Tenancy.Abstraction")
 $array.Add("Muffin.Hetzner.Robot.Api")
 $array.Add("Muffin.WebSockets")
 $array.Add("Muffin.WebSockets.Server")
+$array.Add("Muffin.WebSockets.Server.V2")
 $array.Add("Muffin.WebSockets.Server.Queue")
+$array.Add("Muffin.WebSockets.Server.Queue.V2")
 
 $currentDirectoryPath = pwd
 

@@ -2,16 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<PackageId>CreateIf.Muffin.WebSockets.Server.Queue</PackageId>
-		<Version>6.0.0</Version>
+		<PackageId>CreateIf.Muffin.WebSockets.Server.Queue.V2</PackageId>
+		<Version>6.0.1</Version>
 		<Authors>Arndt Bieberstein</Authors>
 		<Company>CreateIF Labs GmbH</Company>
-		<PackageDescription>CreateIf.Muffin.WebSockets.Server.Queue</PackageDescription>
+		<PackageDescription>CreateIf.Muffin.WebSockets.Server.Queue.V2</PackageDescription>
 		<RepositoryUrl>https://github.com/strattonlead/muffincore</RepositoryUrl>
 	</PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Muffin.WebSockets.Server\Muffin.WebSockets.Server.csproj" />
+    <ProjectReference Include="..\Muffin.BackgroundServices\Muffin.BackgroundServices.csproj" />
+    <ProjectReference Include="..\Muffin.WebSockets.Server.V2\Muffin.WebSockets.Server.V2.csproj" />
   </ItemGroup>
 
   <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
