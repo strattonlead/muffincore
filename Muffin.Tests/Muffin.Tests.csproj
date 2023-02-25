@@ -37,6 +37,7 @@
     <ProjectReference Include="..\Muffin.Primes\Muffin.Primes.csproj" />
     <ProjectReference Include="..\Muffin.Rete\Muffin.Rete.csproj" />
     <ProjectReference Include="..\Muffin.RsaLicense\Muffin.RsaLicense.csproj" />
+    <ProjectReference Include="..\Muffin.Instagram.Api\Muffin.Instagram.Api.csproj" />
   </ItemGroup>
 
 </Project>
