@@ -1,19 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using CreateIF.Instagram.Api.Configuration;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 namespace CreateIf.Instagram.Services
 {
     public class InstagramOAuth2ServiceOptions
     {
+        public string ApiVersion { get; internal set; } = "v16.0";
         public string AppId { get; internal set; }
         public string AppSecet { get; internal set; }
         public string RedirectUri { get; internal set; }

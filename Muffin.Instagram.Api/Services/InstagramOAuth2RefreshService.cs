@@ -1,9 +1,9 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CreateIf.Instagram.Services
 {
@@ -34,7 +34,7 @@ namespace CreateIf.Instagram.Services
                         {
                             if (accessToken.IsValid && accessToken.Expires <= _options.MinAccessTokenLifeSpan)
                             {
-                                var newToken = await oAuth2Service.RefreshAccessToken(accessToken.AccessToken);
+                                var newToken = await oAuth2Service.RefreshAccessToken(accessToken);
                                 accessTokenService.UpdateAccessToken(newToken);
                             }
                         }

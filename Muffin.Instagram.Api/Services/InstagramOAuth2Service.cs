@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using CreateIF.Instagram.Api.Configuration;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CreateIf.Instagram.Services
 {
@@ -16,8 +11,8 @@ namespace CreateIf.Instagram.Services
     {
         string GetAuthUrl();
         Task<AccessTokenResponse> GetAccessToken(string code);
-        Task<IAccessToken> GetLongLivedUserAccessToken(string accessToken);
-        Task<IAccessToken> RefreshAccessToken(string longLivedAccessToken);
+        Task<IAccessToken> GetLongLivedUserAccessToken(IAccessToken accessToken);
+        Task<IAccessToken> RefreshAccessToken(IAccessToken accessToken);
     }
 
     public class InstagramOAuth2Service : IInstagramOAuth2Service
@@ -56,30 +51,34 @@ namespace CreateIf.Instagram.Services
             }
         }
 
-        public async Task<IAccessToken> GetLongLivedUserAccessToken(string accessToken)
+        public async Task<IAccessToken> GetLongLivedUserAccessToken(IAccessToken accessToken)
         {
             using (var httpClient = new HttpClient())
             {
-                var url = InstagramConfiguration.GetLongLivedUserAccessTokenUrl(Options.AppSecet, accessToken);
+                var url = InstagramConfiguration.GetLongLivedUserAccessTokenUrl(Options.AppSecet, accessToken.AccessToken);
                 using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                 {
                     var response = await httpClient.SendAsync(request);
                     var stringResult = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<UserAccessTokenResponse>(stringResult);
+                    var accessTokenResponse = JsonConvert.DeserializeObject<UserAccessTokenResponse>(stringResult);
+                    accessTokenResponse.UserId = accessToken.UserId;
+                    return accessTokenResponse;
                 }
             }
         }
 
-        public async Task<IAccessToken> RefreshAccessToken(string longLivedAccessToken)
+        public async Task<IAccessToken> RefreshAccessToken(IAccessToken accessToken)
         {
             using (var httpClient = new HttpClient())
             {
-                var url = InstagramConfiguration.GetRefreshAccessTokenUrl(longLivedAccessToken);
+                var url = InstagramConfiguration.GetRefreshAccessTokenUrl(accessToken.AccessToken);
                 using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                 {
                     var response = await httpClient.SendAsync(request);
                     var stringResult = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<UserAccessTokenResponse>(stringResult);
+                    var accessTokenResponse = JsonConvert.DeserializeObject<UserAccessTokenResponse>(stringResult);
+                    accessTokenResponse.UserId = accessToken.UserId;
+                    return accessTokenResponse;
                 }
             }
         }
@@ -91,7 +90,7 @@ namespace CreateIf.Instagram.Services
         public string AccessToken { get; set; }
 
         [JsonProperty("user_id")]
-        public long UserId { get; set; }
+        public string UserId { get; set; }
 
         [JsonProperty("error_type")]
         public string ErrorType { get; set; }
@@ -103,6 +102,24 @@ namespace CreateIf.Instagram.Services
         public int? Code { get; set; }
 
         public bool Success => !Code.HasValue || !string.IsNullOrWhiteSpace(ErrorMessage);
+    }
+
+    public class BusinessDiscoveryResult
+    {
+        [JsonProperty("business_discovery")]
+        public BusinessDiscovery BusinessDiscovery { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+    }
+
+    public class BusinessDiscovery
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("followers_count")]
+        public long FollowersCount { get; set; }
     }
 
     public interface IAccessToken
@@ -120,7 +137,13 @@ namespace CreateIf.Instagram.Services
         TimeSpan Expires { get; }
 
         [JsonIgnore]
-        public bool IsValid { get; }
+        bool IsValid { get; }
+
+        /// <summary>
+        /// The ig user id
+        /// </summary>
+        [JsonIgnore]
+        string UserId { get; set; }
     }
 
     public class UserAccessTokenResponse : IAccessToken
@@ -139,5 +162,8 @@ namespace CreateIf.Instagram.Services
 
         [JsonIgnore]
         public bool IsValid => ExpiresIn > 0;
+
+        [JsonIgnore]
+        public string UserId { get; set; }
     }
 }

@@ -1,20 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using CreateIF.Instagram.Api.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CreateIf.Instagram.Services
 {
     public class InstagramOAuth2ServiceOptionsBuilder
     {
         internal InstagramOAuth2ServiceOptions _options = new InstagramOAuth2ServiceOptions();
+
+        public InstagramOAuth2ServiceOptionsBuilder UseApiVersion(string apiVersion)
+        {
+            _options.ApiVersion = apiVersion;
+            return this;
+        }
 
         public InstagramOAuth2ServiceOptionsBuilder UseAppId(string appId)
         {
