@@ -152,6 +152,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.WebSockets.Server.Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muffin.Instagram.Api", "Muffin.Instagram.Api\Muffin.Instagram.Api.csproj", "{4C554378-B963-471C-9AFD-42B374320D4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Muffin.SevDesk.Api", "Muffin.SevDesk.Api\Muffin.SevDesk.Api.csproj", "{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -591,6 +593,12 @@ Global
 		{4C554378-B963-471C-9AFD-42B374320D4A}.EF|Any CPU.Build.0 = Debug|Any CPU
 		{4C554378-B963-471C-9AFD-42B374320D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C554378-B963-471C-9AFD-42B374320D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}.EF|Any CPU.ActiveCfg = Debug|Any CPU
+		{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}.EF|Any CPU.Build.0 = Debug|Any CPU
+		{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74DEAAD9-0E44-4583-80E8-3C95E135EC9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
