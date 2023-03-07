@@ -40,6 +40,13 @@ namespace SevDeskClient
 
         [JsonProperty("translationCode")]
         public string TranslationCode;
+    }
 
+    public static class Categories
+    {
+        public static Category Supplier => new Category() { Id = "2" };
+        public static Category Customer => new Category() { Id = "3" };
+        public static Category Partner => new Category() { Id = "4" };
+        public static Category ProspectCustomer => new Category() { Id = "28" };
     }
 }

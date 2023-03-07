@@ -139,7 +139,7 @@ namespace Muffin.SevDesk.Api
             var restRequest = new RestRequest();
             restRequest.Resource = $"{_objectName<T>()}/{item.Id}";
 
-            restRequest.AddJsonBody(this);
+            restRequest.AddJsonBody(item);
             restRequest.RequestFormat = DataFormat.Json;
             var response = await _restClient.PutAsync(restRequest, cancellationToken);
 
@@ -323,14 +323,14 @@ namespace Muffin.SevDesk.Api
             {
                 restRequest.AddQueryParameter("takeDefaultAddress", "true");
             }
-
-            restRequest.AddJsonBody(new { invoice = this, invoicePosSave = positions });
+            restRequest.AddJsonBody(new { invoice = invoice, invoicePosSave = positions });
             restRequest.Method = Method.Post;
 
             var response = await _restClient.ExecuteAsync(restRequest, cancellationToken);
             invoice = JsonConvert.DeserializeAnonymousType(response.Content, new { objects = new { Invoice = new Invoice() } }, new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Ignore }).objects.Invoice;
             return new FactoryInvoiceResult()
             {
+                Invoice = invoice,
                 StatusCode = response.StatusCode
             };
         }
