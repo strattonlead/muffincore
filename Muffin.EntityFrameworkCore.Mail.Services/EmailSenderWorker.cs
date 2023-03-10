@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Muffin.EntityFrameworkCore.Mail.Services
 {
-    public class EmailSenderWorker<TContext, TSendMailJob, TSmtpCredential, TMailTemplate, TSendMailJobRecipient, TSendMailJobError> : EventBackgroundServiceWithTenancy<EmailSenderWorkerServices<TContext, TSendMailJob, TSmtpCredential, TMailTemplate, TSendMailJobRecipient, TSendMailJobError>>
+    public class EmailSenderWorker<TContext, TSendMailJob, TSmtpCredential, TMailTemplate, TSendMailJobRecipient, TSendMailJobError> : EventBackgroundService<EmailSenderWorkerServices<TContext, TSendMailJob, TSmtpCredential, TMailTemplate, TSendMailJobRecipient, TSendMailJobError>>
         where TContext : DbContext, IMailDbContext<TSendMailJob, TSmtpCredential, TMailTemplate, TSendMailJobRecipient, TSendMailJobError>
         where TSendMailJob : class, ISendMailJob
         where TSmtpCredential : class, ISmtpCredential

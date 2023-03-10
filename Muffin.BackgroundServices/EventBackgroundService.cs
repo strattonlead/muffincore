@@ -19,6 +19,9 @@ namespace Muffin.BackgroundServices
 
         protected readonly ManualResetEvent ResetEvent;
         protected readonly EventBackgroundServiceEvents Events;
+        protected readonly EventBackgroundServiceOptions Options;
+        protected readonly EventBackgroundServiceController Controller;
+
         protected bool RunOnStartup { get; set; }
 
         #endregion
@@ -28,8 +31,40 @@ namespace Muffin.BackgroundServices
         public EventBackgroundService(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            ResetEvent = new ManualResetEvent(false);
+            Options = EventBackgroundServiceOptions.GetOptions(this, serviceProvider);
             Events = EventBackgroundServiceEvents.GetEvents(this, serviceProvider);
+            ResetEvent = new ManualResetEvent(false);
+            Controller = EventBackgroundServiceController.GetController(this, serviceProvider);
+            if (Controller != null)
+            {
+                if (Options.TenancyEnabled)
+                {
+                    Controller._ForceRunWithTenancy += Controller__ForceRunWithTenancy;
+                }
+                else
+                {
+                    Controller._ForceRun += Controller__ForceRun;
+                }
+            }
+        }
+
+
+
+        #endregion
+
+        #region Tenancy
+
+        protected readonly List<long> TenantIds = new List<long>();
+        protected bool RunAllTenants { get; set; }
+
+        private void Controller__ForceRun(object sender, EventBackgroundServiceEventArgs args)
+        {
+            ForceRun();
+        }
+
+        private void Controller__ForceRunWithTenancy(object sender, EventBackgroundServiceEventWithTenancyArgs args)
+        {
+            ForceRun(args.Tenant);
         }
 
         #endregion
@@ -39,6 +74,26 @@ namespace Muffin.BackgroundServices
         public virtual void ForceRun()
         {
             ResetEvent.Set();
+            OnForceRun();
+        }
+
+        public virtual void ForceRun(ITenant tenant)
+        {
+            ForceRun(tenant?.Id);
+        }
+
+        public virtual void ForceRun(long? tenantId)
+        {
+            if (!tenantId.HasValue)
+            {
+                return;
+            }
+
+            if (Options.TenancyEnabled)
+            {
+                TenantIds.Add(tenantId.Value);
+            }
+
             OnForceRun();
         }
 
@@ -97,28 +152,10 @@ namespace Muffin.BackgroundServices
     public abstract class EventBackgroundService<TContext> : EventBackgroundService
        where TContext : notnull
     {
-        #region Properties
-
-        protected readonly EventBackgroundServiceController Controller;
-
-        #endregion
-
         #region Constructor
 
         public EventBackgroundService(IServiceProvider serviceProvider)
-            : base(serviceProvider)
-        {
-            Controller = EventBackgroundServiceController.GetController(this, serviceProvider);
-            if (Controller != null)
-            {
-                Controller._ForceRun += Controller__ForceRun;
-            }
-        }
-
-        private void Controller__ForceRun(object sender, EventBackgroundServiceEventArgs args)
-        {
-            ForceRun();
-        }
+            : base(serviceProvider) { }
 
         #endregion
 
@@ -127,109 +164,51 @@ namespace Muffin.BackgroundServices
         protected override async Task ExecuteScopedAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken)
         {
             var context = serviceProvider.GetRequiredService<TContext>();
-            await ExecuteScopedAsync(context, cancellationToken);
+
+            if (Options.TenancyEnabled)
+            {
+                var tenantScope = serviceProvider.GetRequiredService<ITenantScope>();
+                var tenantEnumerator = serviceProvider.GetRequiredService<ITenantEnumerator>();
+
+                IEnumerable<ITenant> tenants;
+                if (RunAllTenants)
+                {
+                    tenants = tenantEnumerator.GetEnumerator();
+                    TenantIds.Clear();
+                }
+                else
+                {
+                    tenants = tenantEnumerator.GetTenants(TenantIds);
+                    TenantIds.Clear();
+                }
+
+                if (Options.ParallelExecutionEnabled)
+                {
+                    var tasks = tenants.Select(tenant => tenantScope.InvokeScopedAsync<TContext>(tenant, async context => await ExecuteScopedAsync(context, cancellationToken)));
+                    await Task.WhenAll(tasks);
+                }
+                else
+                {
+                    foreach (var tenant in tenants)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
+                        await tenantScope.InvokeScopedAsync<TContext>(tenant, async context =>
+                        {
+                            await ExecuteScopedAsync(context, cancellationToken);
+                        });
+                    }
+                }
+            }
+            else
+            {
+                await ExecuteScopedAsync(context, cancellationToken);
+            }
         }
 
         protected abstract Task ExecuteScopedAsync(TContext scope, CancellationToken cancellationToken);
-
-        #endregion
-    }
-
-    public abstract class EventBackgroundServiceWithTenancy<TContext> : EventBackgroundService<TContext>
-       where TContext : notnull
-    {
-        #region Properties
-
-        private readonly List<long> TenantIds = new List<long>();
-        private bool RunAllTenants { get; set; }
-        protected bool ParallelExecution { get; set; }
-
-        #endregion
-
-        #region Constructor
-
-        public EventBackgroundServiceWithTenancy(IServiceProvider serviceProvider)
-            : base(serviceProvider)
-        {
-            RunAllTenants = RunOnStartup;
-            if (Controller != null)
-            {
-                Controller._ForceRunWithTenancy += Controller__ForceRunWithTenancy;
-            }
-        }
-
-        private void Controller__ForceRunWithTenancy(object sender, EventBackgroundServiceEventWithTenancyArgs args)
-        {
-            ForceRun(args.Tenant);
-        }
-
-        #endregion
-
-        #region IHosted Service
-
-        public override void ForceRun()
-        {
-            RunAllTenants = true;
-            ResetEvent.Set();
-            OnForceRun();
-        }
-
-        public virtual void ForceRun(ITenant tenant)
-        {
-            ForceRun(tenant?.Id);
-        }
-
-        public virtual void ForceRun(long? tenantId)
-        {
-            if (!tenantId.HasValue)
-            {
-                return;
-            }
-
-            TenantIds.Add(tenantId.Value);
-            ResetEvent.Set();
-            OnForceRun();
-        }
-
-        protected override async Task ExecuteScopedAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken)
-        {
-            var context = serviceProvider.GetRequiredService<TContext>();
-            var tenantScope = serviceProvider.GetRequiredService<ITenantScope>();
-            var tenantEnumerator = serviceProvider.GetRequiredService<ITenantEnumerator>();
-
-            IEnumerable<ITenant> tenants;
-            if (RunAllTenants)
-            {
-                tenants = tenantEnumerator.GetEnumerator();
-                TenantIds.Clear();
-            }
-            else
-            {
-                tenants = tenantEnumerator.GetTenants(TenantIds);
-                TenantIds.Clear();
-            }
-
-            if (ParallelExecution)
-            {
-                var tasks = tenants.Select(tenant => tenantScope.InvokeScopedAsync<TContext>(tenant, async context => await ExecuteScopedAsync(context, cancellationToken)));
-                await Task.WhenAll(tasks);
-            }
-            else
-            {
-                foreach (var tenant in tenants)
-                {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        return;
-                    }
-                    await tenantScope.InvokeScopedAsync<TContext>(tenant, async context =>
-                    {
-                        await ExecuteScopedAsync(context, cancellationToken);
-                    });
-                }
-            }
-
-        }
 
         #endregion
     }
@@ -313,6 +292,50 @@ namespace Muffin.BackgroundServices
         }
     }
 
+    public class EventBackgroundServiceOptions
+    {
+        public bool TenancyEnabled { get; set; }
+        public bool ParallelExecutionEnabled { get; set; }
+
+        private static Type _getOptionsType(Type serviceType)
+        {
+            return typeof(EventBackgroundServiceOptions<>).MakeGenericType(serviceType);
+        }
+
+        internal static EventBackgroundServiceOptions GetOptions(EventBackgroundService backgroundService, IServiceProvider serviceProvider)
+        {
+            var type = _getOptionsType(backgroundService.GetType());
+            return (EventBackgroundServiceOptions)serviceProvider.GetService(type) ?? new EventBackgroundServiceOptions();
+        }
+    }
+
+    public class EventBackgroundServiceOptions<TService> : EventBackgroundServiceOptions
+            where TService : EventBackgroundService
+    { }
+
+    public class EventBackgroundServiceOptionsBuilder<TService>
+            where TService : EventBackgroundService
+    {
+        private EventBackgroundServiceOptions<TService> _options = new EventBackgroundServiceOptions<TService>();
+
+        public EventBackgroundServiceOptionsBuilder<TService> UseTenancy()
+        {
+            _options.TenancyEnabled = true;
+            return this;
+        }
+
+        public EventBackgroundServiceOptionsBuilder<TService> UseParallelExecution()
+        {
+            _options.ParallelExecutionEnabled = true;
+            return this;
+        }
+
+        internal EventBackgroundServiceOptions<TService> Build()
+        {
+            return _options;
+        }
+    }
+
     public class EventBackgroundServiceController<TService> : EventBackgroundServiceController
        where TService : EventBackgroundService
     { }
@@ -322,6 +345,17 @@ namespace Muffin.BackgroundServices
         public static void AddEventBackgroundService<TService>(this IServiceCollection services)
             where TService : EventBackgroundService
         {
+            services.AddEventBackgroundService<TService>(null);
+        }
+
+        public static void AddEventBackgroundService<TService>(this IServiceCollection services, Action<EventBackgroundServiceOptionsBuilder<TService>> builder)
+            where TService : EventBackgroundService
+        {
+            var optionsBuilder = new EventBackgroundServiceOptionsBuilder<TService>();
+            builder?.Invoke(optionsBuilder);
+            var options = optionsBuilder.Build();
+
+            services.AddSingleton(options);
             services.AddSingleton<EventBackgroundServiceEvents<TService>>();
             services.AddSingleton<EventBackgroundServiceController<TService>>();
             services.AddHostedService<TService>();
