@@ -241,7 +241,6 @@ namespace Muffin.WebSockets.Server.Handler
                 }
                 catch
                 {
-
                     Logger?.LogWarning($"Unable to deserialize request... Enable Trace to see request details. MessageType: {result.MessageType}");
                     if (data != null)
                     {
@@ -275,6 +274,7 @@ namespace Muffin.WebSockets.Server.Handler
                     WebSocketConnection = webSocketConnection,
                     Handler = this
                 };
+                Logger?.LogInformation($"created websocketrequest. action: {apiRequest.Action} controller: {apiRequest.Controller} requestID: {apiRequest.RequestId} principal: {context.User != null} identity: {context.User?.Identity != null} name: {context.User?.Identity?.Name} authenticated: {context.User?.Identity?.IsAuthenticated}");
 
                 if (apiRequest != null)
                 {

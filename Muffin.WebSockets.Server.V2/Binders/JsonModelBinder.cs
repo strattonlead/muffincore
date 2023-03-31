@@ -82,45 +82,45 @@ namespace Muffin.WebSockets.Server.Binders
                 {
                     try
                     {
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} obj: {field}");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} obj: {field}");
                         bindingContext.Result = ModelBindingResult.Success(Convert.ChangeType(field, bindingContext.ModelType));
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} success");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} success");
                         return;
                     }
                     catch
                     {
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} fail");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} fail");
                     }
 
                     try
                     {
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} try with JsonConvert");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} try with JsonConvert");
                         bindingContext.Result = ModelBindingResult.Success(DeserializeObjectWithOptions(JsonConvert.SerializeObject(field), bindingContext.ModelType));
                         return;
                     }
                     catch
                     {
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} fail");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} fail");
                     }
                 }
                 else if (bindingContext.IsTopLevelObject)
                 {
                     try
                     {
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} as top level object");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} as top level object");
                         bindingContext.Result = ModelBindingResult.Success(DeserializeObjectWithOptions(body, bindingContext.ModelType));
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} success");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} success");
                     }
                     catch (Exception e)
                     {
-                        Logger?.LogInformation($"Bind {bindingContext.FieldName} fail");
+                        Logger?.LogTrace($"Bind {bindingContext.FieldName} fail");
                     }
                 }
                 else if (Nullable.GetUnderlyingType(bindingContext.ModelType) != null)
                 {
-                    Logger?.LogInformation($"Bind {bindingContext.FieldName} as null");
+                    Logger?.LogTrace($"Bind {bindingContext.FieldName} as null");
                     bindingContext.Result = ModelBindingResult.Success(null);
-                    Logger?.LogInformation($"Bind {bindingContext.FieldName} success");
+                    Logger?.LogTrace($"Bind {bindingContext.FieldName} success");
                 }
             }
         }

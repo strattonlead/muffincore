@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
@@ -163,11 +162,6 @@ namespace Muffin.WebSockets.Server.Handler
                             logger?.LogInformation($"Controller Action found? -> {controllerAction?.Name}");
 
                             var controllerFactory = scope.ServiceProvider.GetService<IControllerFactory>();
-                            //if (webSocketRequest?.WebSocketConnection != null)
-                            //{
-                            //    var tenantProvider = scope.ServiceProvider.GetService<ITenantProvider>();
-                            //    webSocketRequest.WebSocketConnection.TenantId = tenantProvider?.ActiveTenant?.Id;
-                            //}
 
                             var routeData = new RouteData();
                             routeData.Values.Add("action", apiRequest.Action);
@@ -179,26 +173,23 @@ namespace Muffin.WebSockets.Server.Handler
                             var actionContext = new ActionContext(webSocketRequest.Context, routeData, actionDescriptor);
                             var controllerContext = new ControllerContext(actionContext);
 
+                            logger?.LogInformation($"controllerFactory.CreateController");
+
                             controller = (WebSocketController)controllerFactory.CreateController(controllerContext);
                             controller.WebSocketRequest = webSocketRequest;
                             controller.WebSocketResponse = webSocketResponse;
                             controller.Init();
+                            logger?.LogInformation($"controller = null? {controller == null}");
+                            logger?.LogInformation($"controllerAction = null? {controllerAction == null}");
 
                             //controller = WebSocketControllerFactory.CreateController(type, WebSocketRequest, WebSocketResponse, ServiceProvider);
                             try
                             {
-
-
                                 if (controller != null && controllerAction != null)
                                 {
-                                    var authorizationAttribute = controllerAction.GetCustomAttribute<AuthorizeAttribute>(true);
-                                    if (authorizationAttribute == null)
-                                    {
-                                        authorizationAttribute = controller.GetType().GetCustomAttribute<AuthorizeAttribute>(true);
-                                    }
-
                                     var authorizationContext = new Security.AuthorizationContext(webSocketRequest?.Context?.User, controllerAction, controller);
                                     var shouldInvoke = controller.OnAuthorization(authorizationContext);
+                                    logger?.LogInformation($"controller.OnAuthorization authorized? {shouldInvoke}");
                                     if (shouldInvoke)
                                     {
                                         logger?.LogInformation("OnActionExecuting");

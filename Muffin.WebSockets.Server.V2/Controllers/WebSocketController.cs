@@ -274,9 +274,21 @@ namespace Muffin.WebSockets.Server.Controllers
                 return true;
             }
 
+            //if (context.Authorize != null)
+            //{
+
+            //}
+
             var authenticated = context?.Principal?.Identity?.IsAuthenticated;
-            if (authenticated == null || !authenticated.Value)
+            if (!authenticated.HasValue)
             {
+                Logger?.LogInformation($"OnAuthorization context.Principal.Identity is null");
+                return false;
+            }
+
+            if (!authenticated.Value)
+            {
+                Logger?.LogInformation($"OnAuthorization context.Principal.Identity.IsAuthenticated is false");
                 return false;
             }
 
@@ -292,6 +304,7 @@ namespace Muffin.WebSockets.Server.Controllers
                             return true;
                         }
                     }
+                    Logger?.LogInformation($"OnAuthorization does not have a required role. required {string.Join(",", context.RequiredRoles)}");
                     return false;
                 }
             }
