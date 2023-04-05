@@ -136,21 +136,23 @@ namespace Muffin.WebSockets.Server.Models
             };
         }
 
-        public static WebSocketConnectionId NewConnectionId(HttpContext context)
+        public static WebSocketConnectionId NewConnectionId(HttpContext context, long? tenantId)
         {
             if (context?.User?.Identity != null && context.User.Identity.IsAuthenticated && !string.IsNullOrWhiteSpace(context.User.Identity.Name))
             {
                 return new WebSocketConnectionId()
                 {
                     RandomId = Guid.NewGuid().ToString().Substring(0, 8),
-                    Identity = context.User.Identity.Name
+                    Identity = context.User.Identity.Name,
+                    TenantId = tenantId
                 };
             }
 
             return new WebSocketConnectionId()
             {
                 RandomId = Guid.NewGuid().ToString().Substring(0, 8),
-                Identity = context.User.Identity.Name
+                Identity = context.User.Identity.Name,
+                TenantId = tenantId
             };
         }
 

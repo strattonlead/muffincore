@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	  <PackageId>CreateIf.Muffin.Common</PackageId>
-	  <Version>6.0.0</Version>
+	  <Version>6.0.4</Version>
 	  <Authors>Arndt Bieberstein</Authors>
 	  <Company>CreateIF Labs GmbH</Company>
 	  <PackageDescription>This package adds CreateIf.Muffin.Common</PackageDescription>

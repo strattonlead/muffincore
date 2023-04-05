@@ -6,7 +6,7 @@ $array = New-Object System.Collections.ArrayList
 # $array.Add("Muffin.AspNetCore.Extensions")
 # $array.Add("Muffin.AspNetCore.Ngrok")
 # $array.Add("Muffin.BackgroundServices")
-# $array.Add("Muffin.Common")
+$array.Add("Muffin.Common")
 # $array.Add("Muffin.ComponentModel.DataAnnotations")
 # $array.Add("Muffin.Deepl")
 # $array.Add("Muffin.Deepl.Abstraction")

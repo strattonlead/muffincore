@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Muffin.Common.Util
 {
-    public static class ExpressionHelperExtentions
+    public static class ExpressionHelper
     {
         // https://stackoverflow.com/a/457328/633945
         public static Expression<Func<T, bool>> AndAlso<T>(
@@ -57,6 +58,26 @@ namespace Muffin.Common.Util
                     return _newValue;
                 return base.Visit(node);
             }
+        }
+
+        public static Dictionary<string, object> GetMethodParameters(this MethodCallExpression body)
+        {
+            if (body == null)
+            {
+                throw new ArgumentException("the expression body must be of type MethodCallExpression");
+            }
+
+            var result = new Dictionary<string, object>();
+            for (var i = 0; i < body.Arguments.Count; i++)
+            {
+                var argument = body.Arguments[i];
+                var parameter = body.Method.GetParameters()[i];
+                var name = parameter.Name;
+
+                var value = Expression.Lambda(argument).Compile().DynamicInvoke();
+                result.Add(name, value);
+            }
+            return result;
         }
     }
 }

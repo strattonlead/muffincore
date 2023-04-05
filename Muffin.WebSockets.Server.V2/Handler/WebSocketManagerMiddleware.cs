@@ -276,6 +276,12 @@ namespace Muffin.WebSockets.Server.Handler
             return this;
         }
 
+        public WebSocketManagerOptionsBuilder UseTenancy(Func<IServiceProvider, HttpContext, long?> func)
+        {
+            Options.GetTenantId = func;
+            return this;
+        }
+
         public WebSocketManagerOptions Build()
         {
             return Options;
@@ -285,5 +291,6 @@ namespace Muffin.WebSockets.Server.Handler
     public class WebSocketManagerOptions
     {
         public Func<IServiceProvider, HttpContext, string> GetSocketIdentity { get; set; }
+        public Func<IServiceProvider, HttpContext, long?> GetTenantId { get; set; }
     }
 }

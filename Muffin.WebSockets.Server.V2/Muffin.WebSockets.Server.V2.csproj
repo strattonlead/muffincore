@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<PackageId>CreateIf.Muffin.WebSockets.Server.V2</PackageId>
-		<Version>6.0.5</Version>
+		<Version>6.0.7</Version>
 		<Authors>Arndt Bieberstein</Authors>
 		<Company>CreateIF Labs GmbH</Company>
 		<PackageDescription>CreateIf.Muffin.WebSockets.Server.V2</PackageDescription>

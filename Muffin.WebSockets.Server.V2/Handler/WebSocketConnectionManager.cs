@@ -50,7 +50,8 @@ namespace Muffin.WebSockets.Server.Handler
 
         public WebSocketConnection AddWebSocket(HttpContext httpContext, WebSocket webSocket)
         {
-            var connectionId = WebSocketConnectionId.NewConnectionId(httpContext);
+            var tenantId = Options.GetTenantId?.Invoke(ServiceProvider, httpContext);
+            var connectionId = WebSocketConnectionId.NewConnectionId(httpContext, tenantId);
             var webSocketConnection = new WebSocketConnection(connectionId, webSocket);
             var webSocketFeature = new WebSocketFeature(webSocketConnection);
 
@@ -148,6 +149,11 @@ namespace Muffin.WebSockets.Server.Handler
         public void Clear()
         {
             _webSocketConnections.Clear();
+        }
+
+        public bool IsConnected(WebSocketConnectionId connectionId)
+        {
+            return _webSocketConnections.ContainsKey(connectionId);
         }
     }
 
