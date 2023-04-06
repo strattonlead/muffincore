@@ -59,6 +59,7 @@ namespace Muffin.BackgroundServices
 
         private void Controller__ForceRun(object sender, EventBackgroundServiceEventArgs args)
         {
+            RunAllTenants = true;
             ForceRun();
         }
 
@@ -112,9 +113,11 @@ namespace Muffin.BackgroundServices
                         if (isFirstRun && RunOnStartup)
                         {
                             isFirstRun = false;
+                            RunAllTenants = true;
 
                             using (var scope = ServiceScopeFactory.CreateScope())
                             {
+                                Logger?.LogInformation($"{GetType()?.Name} ExecuteScopedAsync");
                                 await ExecuteScopedAsync(scope.ServiceProvider, stoppingToken);
                             }
                         }
@@ -129,6 +132,7 @@ namespace Muffin.BackgroundServices
 
                         using (var scope = ServiceScopeFactory.CreateScope())
                         {
+                            Logger?.LogInformation($"{GetType()?.Name} ExecuteScopedAsync");
                             await ExecuteScopedAsync(scope.ServiceProvider, stoppingToken);
                         }
                     }
@@ -173,30 +177,38 @@ namespace Muffin.BackgroundServices
                 IEnumerable<ITenant> tenants;
                 if (RunAllTenants)
                 {
+                    Logger?.LogInformation($"{GetType()?.Name} ExecuteScopedAsync run all tenants");
                     tenants = tenantEnumerator.GetEnumerator();
                     TenantIds.Clear();
+                    RunAllTenants = false;
                 }
                 else
                 {
+                    Logger?.LogInformation($"{GetType()?.Name} ExecuteScopedAsync run tenants {string.Join(",", TenantIds)}");
                     tenants = tenantEnumerator.GetTenants(TenantIds);
                     TenantIds.Clear();
                 }
 
                 if (Options.ParallelExecutionEnabled)
                 {
+                    Logger?.LogInformation($"{GetType()?.Name} InvokeScopedAsync paralell -> ExecuteScopedAsync with context {typeof(TContext).Name} and tenants {tenants?.Count()}");
                     var tasks = tenants.Select(tenant => tenantScope.InvokeScopedAsync<TContext>(tenant, async context => await ExecuteScopedAsync(context, cancellationToken)));
                     await Task.WhenAll(tasks);
                 }
                 else
                 {
+                    Logger?.LogInformation($"{GetType()?.Name} InvokeScopedAsync -> ExecuteScopedAsync with context {typeof(TContext).Name} and tenants {tenants?.Count()}");
                     foreach (var tenant in tenants)
                     {
                         if (cancellationToken.IsCancellationRequested)
                         {
+                            Logger?.LogInformation($"{GetType()?.Name} cancelled");
                             return;
                         }
+
                         await tenantScope.InvokeScopedAsync<TContext>(tenant, async context =>
                         {
+                            Logger?.LogInformation($"{GetType()?.Name} InvokeScopedAsync -> ExecuteScopedAsync with context {typeof(TContext).Name} and tenant {tenant.Id}");
                             await ExecuteScopedAsync(context, cancellationToken);
                         });
                     }
@@ -204,6 +216,7 @@ namespace Muffin.BackgroundServices
             }
             else
             {
+                Logger?.LogInformation($"{GetType()?.Name} InvokeScopedAsync -> ExecuteScopedAsync with context {typeof(TContext).Name}");
                 await ExecuteScopedAsync(context, cancellationToken);
             }
         }

@@ -19,7 +19,9 @@ namespace Muffin.BackgroundServices
         public BaseBackgroundService(IServiceProvider serviceProvider)
         {
             ServiceScopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
-            Logger = serviceProvider.GetRequiredService<ILogger<OneTimeBackgroundService>>();
+
+            var type = typeof(ILogger<>).MakeGenericType(GetType());
+            Logger = (ILogger)serviceProvider.GetService(type);
         }
 
         #endregion

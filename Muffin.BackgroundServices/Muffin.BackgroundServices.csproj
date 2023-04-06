@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<PackageId>CreateIf.Muffin.BackgroundServices</PackageId>
-		<Version>6.0.1</Version>
+		<Version>6.0.5</Version>
 		<Authors>Arndt Bieberstein</Authors>
 		<Company>CreateIF Labs GmbH</Company>
 		<PackageDescription>This package adds CreateIf.Muffin.BackgroundServices</PackageDescription>
