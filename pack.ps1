@@ -5,7 +5,7 @@ $array = New-Object System.Collections.ArrayList
 # $array.Add("Muffin.AspNetCore.Authorization.Permissions")
 # $array.Add("Muffin.AspNetCore.Extensions")
 # $array.Add("Muffin.AspNetCore.Ngrok")
-$array.Add("Muffin.BackgroundServices")
+# $array.Add("Muffin.BackgroundServices")
 # $array.Add("Muffin.Common")
 # $array.Add("Muffin.ComponentModel.DataAnnotations")
 # $array.Add("Muffin.Deepl")
@@ -49,7 +49,7 @@ $array.Add("Muffin.BackgroundServices")
 # $array.Add("Muffin.WebSockets.Server")
 # $array.Add("Muffin.WebSockets.Server.V2")
 # $array.Add("Muffin.WebSockets.Server.Queue")
-# $array.Add("Muffin.WebSockets.Server.Queue.V2")
+ $array.Add("Muffin.WebSockets.Server.Queue.V2")
 
 $currentDirectoryPath = pwd
 

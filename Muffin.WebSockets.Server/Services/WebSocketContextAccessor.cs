@@ -33,7 +33,10 @@ namespace Muffin.WebSockets.Server.Services
 
             WebSocketContext = new Lazy<WebSocketContext>(() =>
             {
-                if (HttpContextAccessor != null && HttpContextAccessor.HttpContext.WebSockets.IsWebSocketRequest)
+                if (HttpContextAccessor != null
+                    && HttpContextAccessor.HttpContext != null
+                    && HttpContextAccessor.HttpContext.WebSockets != null
+                    && HttpContextAccessor.HttpContext.WebSockets.IsWebSocketRequest)
                 {
                     var webSocketFeature = HttpContextAccessor.HttpContext.Features.Get<WebSocketFeature>();
                     if (webSocketFeature != null)

@@ -12,6 +12,8 @@ namespace Muffin.WebSockets.Server.Queue
     {
         WebSocketHandlerEvents WebSocketHandlerEvents { get; }
         void SubmitEnqueue(WebSocketSend webSocketSend);
+
+        WebSocketSendBuilder CreateBaseEnqueue();
     }
 
     public class MessageHandlerQueue<TWebSocketHandler, TClientInterface> : IMessageHandlerQueue
@@ -39,6 +41,11 @@ namespace Muffin.WebSockets.Server.Queue
         #endregion
 
         #region Actions
+
+        public virtual WebSocketSendBuilder CreateBaseEnqueue()
+        {
+            return CreateEnqueue();
+        }
 
         public QueueSendBuilder<TClientInterface> CreateEnqueue()
         {

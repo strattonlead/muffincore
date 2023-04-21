@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<PackageId>CreateIf.Muffin.WebSockets.Server.Queue.V2</PackageId>
-		<Version>6.0.1</Version>
+		<Version>6.0.2</Version>
 		<Authors>Arndt Bieberstein</Authors>
 		<Company>CreateIF Labs GmbH</Company>
 		<PackageDescription>CreateIf.Muffin.WebSockets.Server.Queue.V2</PackageDescription>
