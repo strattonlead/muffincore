@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
 		<PackageId>CreateIf.Muffin.WebSockets</PackageId>
 		<Version>6.0.0</Version>
 		<Authors>Arndt Bieberstein</Authors>
@@ -18,12 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Muffin.Common\Muffin.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Muffin.Common">
-      <HintPath>..\..\Libs\MuffinCore\Muffin.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">

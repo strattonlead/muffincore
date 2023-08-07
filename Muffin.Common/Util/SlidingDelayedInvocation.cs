@@ -62,7 +62,7 @@ namespace Muffin.Common.Util
         internal class DelayedInvocation
         {
             public Action Action { get; set; }
-            public Timer Timer { get; set; }
+            public System.Timers.Timer Timer { get; set; }
             public SlidingDelayedInvocation Sender { get; set; }
             private bool IsExecuting;
             private bool IsCancelled;

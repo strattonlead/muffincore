@@ -302,7 +302,7 @@ namespace Muffin.Common.Util
     {
         public TKey Key { get; set; }
         public TValue Value { get; set; }
-        public Timer Timer { get; set; }
+        public System.Timers.Timer Timer { get; set; }
         public ConcurrentDictionary<TKey, ExpirableEntry<TKey, TValue>> RefOfValue { get; set; }
 
         public ExpirableEntry(TKey key, TValue value, ConcurrentDictionary<TKey, ExpirableEntry<TKey, TValue>> refOfValue, TimeSpan timeout)
@@ -310,7 +310,7 @@ namespace Muffin.Common.Util
             Key = key;
             Value = value;
             RefOfValue = refOfValue;
-            Timer = new Timer(timeout.TotalMilliseconds);
+            Timer = new System.Timers.Timer(timeout.TotalMilliseconds);
             Timer.Elapsed += Timer_Elapsed;
             Timer.Start();
         }
