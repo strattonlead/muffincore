@@ -7,8 +7,7 @@ namespace Muffin.Common.Util
     public static class ExpressionHelper
     {
         // https://stackoverflow.com/a/457328/633945
-        public static Expression<Func<T, bool>> AndAlso<T>(
-        this Expression<Func<T, bool>> expr1,
+        public static Expression<Func<T, bool>> AndAlso<T>(this Expression<Func<T, bool>> expr1,
         Expression<Func<T, bool>> expr2)
         {
             var parameter = Expression.Parameter(typeof(T));
@@ -23,8 +22,7 @@ namespace Muffin.Common.Util
                 Expression.AndAlso(left, right), parameter);
         }
 
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1,
-            Expression<Func<T, bool>> expr2)
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
         {
             var parameter = Expression.Parameter(typeof(T));
 
