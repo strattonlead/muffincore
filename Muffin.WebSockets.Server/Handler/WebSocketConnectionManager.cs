@@ -341,7 +341,7 @@ namespace Muffin.WebSockets.Server.Handler
                 Events?.InvokeOnSocketRemoved(socketInfo);
             }
 
-            if (socketInfo.WebSocket.State != WebSocketState.Closed)
+            if (socketInfo.WebSocket.State == WebSocketState.Open)
             {
                 await socketInfo.WebSocket.CloseAsync(closeStatus: closeStatus,
                                                         statusDescription: "Closed by the WebSocketManager",

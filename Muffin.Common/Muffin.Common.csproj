@@ -1,13 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
 	  <PackageId>CreateIf.Muffin.Common</PackageId>
-	  <Version>6.0.4</Version>
+	  <Version>6.0.5</Version>
+	  <PackageVersion>6.0.5</PackageVersion>
 	  <Authors>Arndt Bieberstein</Authors>
-	  <Company>CreateIF Labs GmbH</Company>
-	  <PackageDescription>This package adds CreateIf.Muffin.Common</PackageDescription>
-	  <RepositoryUrl>https://github.com/strattonlead/muffincore</RepositoryUrl>
+	  <Company>createIF Labs GmbH</Company>
+	  <EnablePackageValidation>true</EnablePackageValidation>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <NoWarn>$(NoWarn);CS1591</NoWarn>
+	  <PackageTags>createif</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <Description>Common functions</Description>
+	  <PackageProjectUrl>https://github.com/strattonlead/muffincore</PackageProjectUrl>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <PrivateRepositoryUrl>https://github.com/strattonlead/muffincore.git</PrivateRepositoryUrl>
+	  <PackageIcon>icon.png</PackageIcon>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,4 +37,9 @@
     <Exec Command="xcopy /Q /Y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(SolutionDir)..\Libs\MuffinCore&quot;" />
   </Target>-->
 
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath=""/>
+		<None Include="README.md" Pack="true" PackagePath=""/>
+	</ItemGroup>
+	
 </Project>

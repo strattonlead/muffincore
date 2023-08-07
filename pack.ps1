@@ -6,7 +6,7 @@ $array = New-Object System.Collections.ArrayList
 # $array.Add("Muffin.AspNetCore.Extensions")
 # $array.Add("Muffin.AspNetCore.Ngrok")
 # $array.Add("Muffin.BackgroundServices")
-# $array.Add("Muffin.Common")
+$array.Add("Muffin.Common")
 # $array.Add("Muffin.ComponentModel.DataAnnotations")
 # $array.Add("Muffin.Deepl")
 # $array.Add("Muffin.Deepl.Abstraction")
@@ -49,7 +49,7 @@ $array = New-Object System.Collections.ArrayList
 # $array.Add("Muffin.WebSockets.Server")
 # $array.Add("Muffin.WebSockets.Server.V2")
 # $array.Add("Muffin.WebSockets.Server.Queue")
- $array.Add("Muffin.WebSockets.Server.Queue.V2")
+# $array.Add("Muffin.WebSockets.Server.Queue.V2")
 
 $currentDirectoryPath = pwd
 
@@ -90,6 +90,6 @@ $array | ForEach-Object {
     $nugetFilePath = Join-Path -Path $pwd -ChildPath "$project/bin/Release/$filename"
     Write-Output $nugetFilePath
 
-    dotnet nuget push $nugetFilePath --api-key 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 --source "createif-labs" --skip-duplicate
+    dotnet nuget push $nugetFilePath --api-key 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 --source "createif-labs" --skip-duplicate
     Write-Output "Packed $_ ..."
 }

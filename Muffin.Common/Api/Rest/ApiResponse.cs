@@ -30,6 +30,9 @@ namespace Muffin.Common.Api.Rest
         [JsonIgnore]
         public bool HasError => !string.IsNullOrWhiteSpace(ErrorMessage);
 
+        [JsonProperty(PropertyName = "data")]
+        public object Data { get; set; }
+
         public void Throw()
         {
             if (ErrorMessage != null)
@@ -42,6 +45,6 @@ namespace Muffin.Common.Api.Rest
     public class ApiResponse<T> : ApiResponse
     {
         [JsonProperty(PropertyName = "data")]
-        public T Data { get; set; }
+        public new T Data { get; set; }
     }
 }
