@@ -5,8 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageId>CreateIf.Muffin.Tenancy.Abstraction</PackageId>
-		<Version>6.0.5</Version>
-		<PackageVersion>6.0.5</PackageVersion>
+		<Version>6.0.6</Version>
+		<PackageVersion>6.0.6</PackageVersion>
 		<Authors>Arndt Bieberstein</Authors>
 		<Company>createIF Labs GmbH</Company>
 		<EnablePackageValidation>true</EnablePackageValidation>
